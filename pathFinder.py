@@ -1,28 +1,12 @@
 import numpy as np
-class Node():
-    def __init__(self, parent=None, position=None):
-        self.parent = parent
-        self.position = position
 
-        self.f = 0
-        self.g = 0
-        self.h = 0
+def GCost(maze, startX, startY, currentX, currentY):
+    f_cost = (currentY - startY)**2 + (currentX - startX)**2
+    return f_cost
     
-def AStar(maze, start, end):
-    start = Node(None, start)
-    end = Node(None, end)
-
-    open = []
-    closed = []
-
-    open.append(start)
-
-def FCost(maze, startX, startY, endX, endY):
-    print(f" starting point {maze[startY][startX]}")
-    print(f" current {maze[endY][endX]}")
-    print(f" F Cost {(endY - startY)**2 + (endX - startX)**2}")
-    
-
+def HCost(maze, endX, endY, currentX, currentY):
+    h_cost = (currentY - endY)**2 + (currentX - endX)**2
+    return h_cost
 maze = np.array([
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -35,7 +19,14 @@ maze = np.array([
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ])
-# print(f" starting point {maze[0][0]}")
-# print(f" current {maze[0][4]}")
-# print(f" Distance {pow((16-0 + 0-0), 0.5)}")
-FCost(maze, 0, 0, 3, 4)
+ # write a function to find the child nodes
+def childNodes(maze, y, x):
+    new_positions = [(0, -1), (0, 1), (-1, -1), (-1, 1), (-1, 0), (1, -1), (1, 1), (1, 0)]
+    children = []
+    for new_pos in new_positions:
+        children.append(maze[y+new_pos[0]][x+new_pos[1]])
+
+    return children
+
+
+print(childNodes(maze, 3, 4))
